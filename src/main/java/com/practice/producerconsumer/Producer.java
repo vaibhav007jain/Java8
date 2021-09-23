@@ -71,7 +71,7 @@ public class Producer implements Runnable{
 
     private void produce(int counter) throws InterruptedException {
         synchronized (taskQueue){
-            if(taskQueue.size() == MAX_CAPACITY){
+            while(taskQueue.size() == MAX_CAPACITY){
                 System.out.println("Queue is Full."+ Thread.currentThread().getName()+" producer thread is waiting...");
                 taskQueue.wait();
             }

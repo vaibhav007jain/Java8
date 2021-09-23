@@ -43,6 +43,30 @@ public class PracticeJava8 {
         System.out.println("Factorial: " + getFactorialOf(5));
 
         System.out.println(findFrequencyOfCharsInAString("password@123"));
+
+        getListOfUsersAfterIncrementingSalaries();
+        trySomethingIntresting();
+
+//        System.out.println("-1 User:  "+getUsers().get(-1)); throws ArrayIndexOutOfBoundsException
+
+    }
+
+    private static List<User> getListOfUsersAfterIncrementingSalaries() {
+        System.out.println("List of Employees with incremented Salaries:");
+        List<User> usersWithIncrementedSalaries = getUsers()
+                .stream()
+                .map(u -> {
+                    User user = u;
+                    user.setSalary(u.getSalary() * 1.5);
+                    return user;
+                }).peek(System.out::println)
+                .collect(Collectors.toList());
+        return usersWithIncrementedSalaries;
+    }
+
+    private static void trySomethingIntresting() {
+        System.out.println("Employee Names");
+        getUsers().stream().map(User::getName).peek(System.out::println).collect(Collectors.toList());
     }
 
     private static String findFrequencyOfCharsInAString(String string) {
@@ -51,7 +75,7 @@ public class PracticeJava8 {
                 .collect(Collectors.toMap(x -> x, v -> 1, Integer::sum))
                 .entrySet().stream()
                 .sorted(Map.Entry.comparingByValue())
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (o,n) -> n, HashMap::new))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (o, n) -> n, HashMap::new))
                 .forEach((k, v) -> System.out.println("Char: " + k + " Count: " + v));
 // OR
         string.chars()
@@ -60,12 +84,12 @@ public class PracticeJava8 {
                         k -> (char) k.intValue(),
                         v -> 1,
                         Integer::sum
-                )).forEach((k, v) -> System.out.println("Char: "+k+" New Count: "+v));
+                )).forEach((k, v) -> System.out.println("Char: " + k + " New Count: " + v));
 
         string.chars()
                 .mapToObj(c -> (char) c)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
-                .forEach((k, v) -> System.out.println("Grouped by Key: "+k+" And Value: "+v));
+                .forEach((k, v) -> System.out.println("Grouped by Key: " + k + " And Value: " + v));
 
         return null;
     }
@@ -155,6 +179,7 @@ public class PracticeJava8 {
 //        input.chars().peek(System.out::println).collect(Collectors.groupingBy(Integer::getInteger, Collectors.counting()));
         System.out.println(input.chars().distinct().count());
 //        input.chars().boxed().count();
+
     }
 
     private static void sortOnSalary() {

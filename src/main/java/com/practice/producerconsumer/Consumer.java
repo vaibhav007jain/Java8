@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Consumer implements Runnable{
     private final List<Integer> taskQueue;
+    public int modify = 10;
 
     public Consumer(List<Integer> sharedQueue){
         this.taskQueue=sharedQueue;
